@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+#
+# Shell script to install all needed development tools and software
+# Run as root/sudo
+#
+
+# Colors for printing
+RED='\033[1;31m'
+BLU='\033[1;34m'
+NC='\033[0m'
+
+# Path to temporary installation directory
+insPath=/tmp/auto_sys_install/
+
+# Simple error handler function to print to stderr
+err() {
+  echo -e "${RED}[$(date +"%T")] ERROR:${NC} $@" >&2
+  exit 1
+}
+
+# Simple message handler function
+msg() {
+  echo -e "\n${BLU}[$(date +"%T")]:${NC} $@\n"
+}
+
+if [[ $1 = "-h" ]]; then
+  echo "Usage: ./install_packages [-a]"
+  echo -e "\t-a,\tInstall all packages including source based ones that may be redundant"
+  exit 0
+fi
+
+pkgApp=brew
+
+msg "Using $pkgApp pakage manager for installation"
+
+msg "Install started at: $(date)"
+msg "Creating temp directory at: $insPath\n"
+mkdir -p $insPath
+pushd $insPath
+
+###############################################################################
+# Add Optional Repos: Update and upgrade
+###############################################################################
+
+msg "Updating current repo lists and adding any additional groups"
+
+# Install `brew` package manager (https://brew.sh/)
+msg "Installing brew"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install cask
+brew update
+
+###############################################################################
+# Install Basic Development Parts & General Tools
+###############################################################################
+
+# NOTE: If certain programs/packages are not wanted they can be easily commented out
+msg "Installing applications using $pkgApp"
+
+# TODO: consolidate common package names
+brew install \
+     bash \
+     bash-completion \
+     cmake \
+     doxygen \
+     editorconfig \
+     file-formula \
+     gnutls \
+     gpatch \
+     htop \
+     ranger \
+     the_silver_searcher \
+     tmux \
+     tree \
+     watch \
+     wdiff \
+     wget \
+     ctags \
+     pidof \
+     reattach-to-user-namespace
+
+msg "install Java Dev Kit: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html"
+brew cleanup
+
+chsh -s /usr/local/bin/bash
+sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
+ln -s /usr/local/bin/bash /usr/local/bin/bash-terminal-app
+
+###############################################################################
+# Source-based installs
+###############################################################################
+
+if [[ $1 = "-a" ]]; then
+  # GHDL- FOSS VHDL compiler & simulator
+  pushd /usr/local/
+  sudo wget https://github.com/ghdl/ghdl/releases/download/v0.36/ghdl-0.36-macosx-llvm.tgz
+  sudo tar -xzvf ghdl-0.36-macosx-llvm.tgz
+  sudo rm -f ghdl-0.36-macosx-llvm.tgz
+  popd
+
+  #TODO: add custom Google Fonts from www.fonts.google.com for some distros
+fi
+
+
+###############################################################################
+# Clean & exit
+###############################################################################
+
+msg "Deleting temp directory at $insPath"
+popd
+rm -rf $insPath*
+msg "\nDONE!... Installs and updates successful\n"
+

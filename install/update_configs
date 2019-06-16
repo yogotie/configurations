@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Shell script to update all needed development tools
+# Run as intended user
+#
+
+# First copy local files over if they're newer
+mkdir -p ~/.vim/colors
+mkdir -p ~/.config/ranger
+
+rsync -av ~/.gitconfig                       ../configs/.gitconfig
+rsync -av ~/.bashrc                          ../configs/.bashrc
+rsync -av ~/.bash_profile                    ../configs/.bash_profile
+rsync -av ~/.inputrc                         ../configs/.inputrc
+rsync -av ~/.vimrc                           ../configs/.vimrc
+rsync -av ~/.vim/colors/monokai.vim          ../configs/.vim/colors/monokai.vim
+rsync -av ~/.tmux.conf                       ../configs/.tmux.conf
+rsync -av ~/.config/ranger/rc.conf           ../configs/.config/ranger/rc.conf
+rsync -av ~/.config/ranger/scope.sh          ../configs/.config/ranger/scope.sh
+rsync -av ~/.ctags                           ../configs/.ctags
+rsync -av ~/.glbl_gitignore                  ../configs/.glbl_gitignore
+
+# Then copy remote files over if they're newer
+rsync -av ../configs/.gitconfig               ~/.gitconfig
+rsync -av ../configs/.bashrc                  ~/.bashrc
+rsync -av ../configs/.bash_profile            ~/.bash_profile
+rsync -av ../configs/.inputrc                 ~/.inputrc
+rsync -av ../configs/.vimrc                   ~/.vimrc
+
+rsync -av ../configs/.vim/colors/monokai.vim  ~/.vim/colors/monokai.vim
+rsync -av ../configs/.tmux.conf               ~/.tmux.conf
+rsync -av ../configs/.config/ranger/rc.conf   ~/.config/ranger/rc.conf
+rsync -av ../configs/.config/ranger/scope.sh  ~/.config/ranger/scope.sh
+rsync -av ../configs/.ctags                   ~/.ctags
+rsync -av ../configs/.glbl_gitignore          ~/.glbl_gitignore
