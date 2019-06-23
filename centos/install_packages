@@ -251,6 +251,7 @@ elif [ "$pkgApp" = "yum" ]; then
     g++ \
     gcc \
     gcc-c++ \
+    gcc-gnat \
     gimp \
     git-core \
     gtkwave \
