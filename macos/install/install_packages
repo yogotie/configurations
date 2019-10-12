@@ -90,16 +90,14 @@ ln -s /usr/local/bin/bash /usr/local/bin/bash-terminal-app
 # Source-based installs
 ###############################################################################
 
-if [[ $1 = "-a" ]]; then
-  # GHDL- FOSS VHDL compiler & simulator
-  pushd /usr/local/
-  sudo wget https://github.com/ghdl/ghdl/releases/download/v0.36/ghdl-0.36-macosx-llvm.tgz
-  sudo tar -xzvf ghdl-0.36-macosx-llvm.tgz
-  sudo rm -f ghdl-0.36-macosx-llvm.tgz
-  popd
+# GHDL- FOSS VHDL compiler & simulator
+pushd /usr/local/
+sudo wget https://github.com/ghdl/ghdl/releases/download/v0.36/ghdl-0.36-macosx-llvm.tgz
+sudo tar -xzvf ghdl-0.36-macosx-llvm.tgz
+sudo rm -f ghdl-0.36-macosx-llvm.tgz
+popd
 
-  #TODO: add custom Google Fonts from www.fonts.google.com for some distros
-fi
+#TODO: add custom Google Fonts from www.fonts.google.com for some distros
 
 
 ###############################################################################
