@@ -16,17 +16,6 @@ fi
 if [ -f /etc/profile.d/bash_completion.sh ]; then
   . /etc/profile.d/bash_completion.sh
 fi
-# On macOS, load brew bash completion modules
-if [ $(uname) = "Darwin" ] && command -v brew &> /dev/null ; then
-  BREW_PREFIX=$(brew --prefix)
-  if [ -f "$BREW_PREFIX"/etc/bash_completion ]; then
-    . "$BREW_PREFIX"/etc/bash_completion
-  fi
- # homebrew/versions/bash-completion2 (required for projects.completion.bash) is installed to this path
-  if [ "${BASH_VERSINFO}" -ge 4 ] && [ -f "$BREW_PREFIX"/share/bash-completion/bash_completion ]; then
-    . "$BREW_PREFIX"/share/bash-completion/bash_completion
-  fi
-fi
 
 
 # =============================================================================
@@ -80,35 +69,18 @@ export LESS_TERMCAP_md="${yellow}"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER='less -X'
 
-if [ "$(uname -s)" = "Linux" ]; then
-  # add paths for - NVCC NVIDIA CUDA Compiler
-  #               - MATLAB R2018b
-  #               - Vivado & SDK 2018.2
-  #               - Linaro build tools
-  #               - Ruby `rbenv`
-#  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+export PATH=$PATH:/usr/local/go/bin
+#export PATH=$PATH:~/src/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin
+export PATH=$PATH:~/.rbenv/bin
 
-#  export PATH=$PATH:/usr/local/cuda/bin
-  export PATH=$PATH:/usr/local/go/bin
-#  export PATH=$PATH:/usr/local/MATLAB/R2018b/bin
-#  export PATH=$PATH:/home/jgentile/bin/Xilinx/Vivado/2018.2/bin/
-#  export PATH=$PATH:/home/jgentile/bin/Xilinx/SDK/2018.2/bin/
-#  export PATH=$PATH:/home/jgentile/src/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin
-  export PATH=$PATH:/home/tlinden/.rbenv/bin
-#  export PATH=$PATH:/home/jgentile/bin
+#export RTE_TARGET=x86_64-native-linuxapp-gcc
+# Prevent ioctl error when gpg2 signing
+export GPG_TTY=$(tty)
 
-#  export RTE_SDK=/home/jgentile/src/dpdk-19.02
-#  export RTE_TARGET=x86_64-native-linuxapp-gcc
-  # Prevent ioctl error when gpg2 signing
-  export GPG_TTY=$(tty)
-  # Enable GCC 8 & LLVM 7 in CentOS
-  if [ -f /etc/centos-release ]; then
-    source scl_source enable devtoolset-8 llvm-toolset-7
-  fi
-elif [ "$(uname -s)" = "Darwin" ]; then
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH:/usr/local/go/bin:~/.cargo/bin"
+# Enable GCC 8 & LLVM 7 in CentOS
+if [ -f /etc/centos-release ]; then
+  source scl_source enable devtoolset-8 llvm-toolset-7
 fi
-
 
 # =============================================================================
 # User specific aliases and functions
@@ -126,17 +98,7 @@ else
 fi
 
 # easy updating for package management
-if [ "$(uname -s)" = "Linux" ]; then
-  if [ -n "$(command -v apt)" ]; then
-    alias sys-update='sudo apt update && sudo apt dist-upgrade -y && sudo apt autoremove -y && echo "" > /tmp/sys_package_updates'
-  elif [ -n "$(command -v yum)" ]; then
-    alias sys-update='sudo yum upgrade -y && echo "" > /tmp/sys_package_updates'
-  elif [ -n "$(command -v dnf)" ]; then
-    alias sys-update='sudo dnf upgrade -y && echo "" > /tmp/sys_package_updates'
-  fi
-elif [ "$(uname -s)" = "Darwin" ]; then
-  alias sys-update='brew update && brew upgrade && brew cleanup && echo "" > /tmp/sys_package_updates'
-fi
+alias sys-update='sudo yum upgrade -y && echo "" > /tmp/sys_package_updates'
 
 # ls macros
 alias ll='ls -lhXG'
@@ -227,3 +189,4 @@ esac
 if [ $(command -v rbenv) ]; then
   eval "$(rbenv init -)"
 fi
+

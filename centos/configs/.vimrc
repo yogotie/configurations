@@ -26,20 +26,10 @@ set autoread       " Autoload changes when switching buffers or gaining focus
 set timeoutlen=300 " Quicker timeout for events (default: 1000 ms)
 
 " Determine OS being used (NOTE: `uname` not present on Windows)
-if !exists("g:my_os")
-  if has ("win64") || has("win32") || has("win16")
-    let g:my_os = "Windows"
-  else
-    let g:my_os = substitute(system('uname'), '\n', '', '')
-  endif
-endif
+let g:my_os = substitute(system('uname'), '\n', '', '')
 
 " Use system CLIPBOARD register. Vim must be built w/clipboard support
-if (g:my_os == "Darwin") || (g:my_os == "Windows")
-  set clipboard=unnamed
-else "*nix
-  set clipboard=unnamedplus
-endif
+set clipboard=unnamedplus
 
 " Turn off background color erase (BCE) so that color schemes work within tmux
 " (prevalent in CentOS 7.* where background bars are seen) based on term
