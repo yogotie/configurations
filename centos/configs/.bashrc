@@ -25,10 +25,16 @@ fi
 # customize PS1 bash prompt and change if on remote machine over SSH:
 #   SSH: bold w/red user@host and yellow pwd $
 #   Local: bold w/blue user@host and yellow pwd $
+
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
 if [ -n "$SSH_CLIENT" ]; then
   export PS1="\[\e[1;31m\][SSH]\u@\h \[\e[1;33m\]\W $\[\e[0m\] "
 else
-  export PS1="\[\e[1;34m\]\u@\h \[\e[1;33m\]\W $\[\e[0m\] "
+  export PS1="\[\e[1;34m\]\u@\h \[\e[1;33m\]\W\[\e[0m\]\$(parse_git_branch)\[\033[00m\] $ "
+#  export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 fi
 
 # set vim as default editor
