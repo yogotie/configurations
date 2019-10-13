@@ -70,7 +70,7 @@ yum -y groupinstall "Development Tools" \
 "Security Tools" \
 "System Administration Tools"
 yum -y install apr-devel \
-  apr-util-cdevel \
+  apr-util-devel \
   autoconf \
   automake \
   bash-completion \
@@ -84,10 +84,8 @@ yum -y install apr-devel \
   ctags \
   curl \
   curl-devel \
-  g++ \
   gcc \
   gcc-c++ \
-  gcc-gnat \
   git-core \
   htop \
   kernel-devel \
@@ -106,13 +104,11 @@ yum -y install apr-devel \
   openssl-devel \
   patch \
   perftest \
-  qemu \
   qemu-kvm \
   qperf \
   readline \
   readline-devel \
   sqlite-devel \
-  the_silver_searcher \
   tmux \
   vim \
   vsftpd \
@@ -120,6 +116,10 @@ yum -y install apr-devel \
   zlib \
   zlib-devel \
   minicom
+#  g++ \
+#  gcc-gnat \
+#  qemu \
+#  the_silver_searcher \
 #  centos-release-scl \
 #  devtoolset-8 \
 #  gimp \
