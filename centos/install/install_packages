@@ -113,7 +113,8 @@ yum -y install apr-devel \
   wget \
   zlib \
   zlib-devel \
-  minicom
+  minicom \
+  python3-devel
 #  libelf-devel \
 #  libyaml-devel \
 #  g++ \
@@ -142,7 +143,6 @@ yum -y install apr-devel \
 #  npm \
 #  python-devel \
 #  python34 \
-#  python34-devel \
 #  vnc-server \
 #  weechat \
 #  python-pip \
