@@ -67,7 +67,7 @@ yum -y install yum-utils
 yum -y groupinstall "Development Tools" \
 "Compatibility Libraries" \
 #"GNOME Desktop" \
-"Security Tools" \
+#"Security Tools" \
 "System Administration Tools"
 yum -y install apr-devel \
   apr-util-devel \
@@ -91,9 +91,7 @@ yum -y install apr-devel \
   kernel-devel \
   kernel-doc \
   libtool \
-  libelf-devel \
   libffi-devel \
-  libyaml-devel \
   libevent-devel \
   libevent-doc \
   llvm \
@@ -116,6 +114,8 @@ yum -y install apr-devel \
   zlib \
   zlib-devel \
   minicom
+#  libelf-devel \
+#  libyaml-devel \
 #  g++ \
 #  gcc-gnat \
 #  qemu \
