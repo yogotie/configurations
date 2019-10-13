@@ -54,19 +54,6 @@ pushd ./ghdl/build
 make && make install
 popd
 
-## TODO: verify for distros other than fedora
-# Go- remove older Go 1st (if there) then install (note DL link should be
-# checked for updates)
-#msg "Installing Go from source..."
-#rm -rf /usr/local/go
-#TODO: figure out per system install from https://golang.org/doc/install
-#wget https://storage.googleapis.com/golang/go1.9.linux-amd64.tar.gz
-#tar -C /usr/local/ -xzf go1.9.linux-amd64.tar.gz
-
-# Rust install
-msg "Installing Rust from source..."
-curl https://sh.rustup.rs -sSf | sh
-
 # tmux 2.9a install from src
 msg "Installing tmux from source..."
 wget https://github.com/tmux/tmux/releases/download/2.9a/tmux-2.9a.tar.gz

@@ -71,16 +71,16 @@ export MANPAGER='less -X'
 
 export PATH=$PATH:/usr/local/go/bin
 #export PATH=$PATH:~/src/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin
-export PATH=$PATH:~/.rbenv/bin
+#export PATH=$PATH:~/.rbenv/bin
 
 #export RTE_TARGET=x86_64-native-linuxapp-gcc
 # Prevent ioctl error when gpg2 signing
 export GPG_TTY=$(tty)
 
 # Enable GCC 8 & LLVM 7 in CentOS
-if [ -f /etc/centos-release ]; then
-  source scl_source enable devtoolset-8 llvm-toolset-7
-fi
+#if [ -f /etc/centos-release ]; then
+#  source scl_source enable devtoolset-8 llvm-toolset-7
+#fi
 
 # =============================================================================
 # User specific aliases and functions
@@ -186,7 +186,7 @@ case "$(pidof ssh-agent | wc -w)" in
 esac
 
 # Initiate Ruby environment
-if [ $(command -v rbenv) ]; then
-  eval "$(rbenv init -)"
-fi
+#if [ $(command -v rbenv) ]; then
+#  eval "$(rbenv init -)"
+#fi
 

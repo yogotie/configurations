@@ -76,7 +76,6 @@ yum -y install apr-devel \
   bash-completion \
   bison \
   bzip2 \
-  centos-release-scl \
   cifs-utils \
   clang \
   clang-analyzer \
@@ -85,50 +84,28 @@ yum -y install apr-devel \
   ctags \
   curl \
   curl-devel \
-  devtoolset-8 \
   g++ \
   gcc \
   gcc-c++ \
   gcc-gnat \
-  gimp \
   git-core \
-  gtkwave \
   htop \
-  httpd \
-  httpd-devel \
-  ibutils \
-  infiniband-diags \
   kernel-devel \
   kernel-doc \
+  libtool \
   libelf-devel \
   libffi-devel \
-  libibcommon \
-  libibverbs \
-  libibverbs-utils \
-  libtool \
   libyaml-devel \
   libevent-devel \
   libevent-doc \
   llvm \
   llvm-devel \
   llvm-libs \
-  llvm-toolset-7 \
-  llvm-toolset-7-build \
-  llvm-toolset-7-clang-analyzer \
-  llvm-toolset-7-clang-devel \
-  llvm-toolset-7-clang-tools-extra \
-  llvm-toolset-7-llvm-devel \
   make \
-  nano \
   nmap \
-  nodejs \
-  npm \
   openssl-devel \
   patch \
   perftest \
-  python-devel \
-  python34 \
-  python34-devel \
   qemu \
   qemu-kvm \
   qperf \
@@ -138,39 +115,59 @@ yum -y install apr-devel \
   the_silver_searcher \
   tmux \
   vim \
-  vnc-server \
   vsftpd \
-  weechat \
   wget \
   zlib \
   zlib-devel \
-  python-pip \
-  python34-setuptools \
   minicom
+#  centos-release-scl \
+#  devtoolset-8 \
+#  gimp \
+#  gtkwave \
+#  httpd \
+#  httpd-devel \
+#  ibutils \
+#  infiniband-diags \
+#  libibcommon \
+#  libibverbs \
+#  libibverbs-utils \
+#  llvm-toolset-7 \
+#  llvm-toolset-7-build \
+#  llvm-toolset-7-clang-analyzer \
+#  llvm-toolset-7-clang-devel \
+#  llvm-toolset-7-clang-tools-extra \
+#  llvm-toolset-7-llvm-devel \
+#  nano \
+#  nodejs \
+#  npm \
+#  python-devel \
+#  python34 \
+#  python34-devel \
+#  vnc-server \
+#  weechat \
+#  python-pip \
+#  python34-setuptools \
 
-sudo easy_install-3.4 pip
-
-/usr/lib/virtualbox/vboxdrv.sh setup
-usermod -a -G vboxusers $USER
+#sudo easy_install-3.4 pip
 
 # Enable Clang 5.x tools
-scl enable devtoolset-8 llvm-toolset-7 bash
+#scl enable devtoolset-8 llvm-toolset-7 bash
 
-msg "Installing npm packages"
-npm install -g grunt-cli \
-  gulp-cli \
-  write-good
+#msg "Installing npm packages"
+#npm install -g grunt-cli \
+#  gulp-cli \
+#  write-good
 
-msg "Installing Gems"
-gem install bundler \
-  jekyll \
-  vimgolf
+#msg "Installing Gems"
+#gem install bundler \
+#  jekyll \
+#  vimgolf
 
 # TODO: system dependent pip?
-msg "Installing Python modules via pip"
-pip install awscli \
-  proselint
-  vim-vint
+#msg "Installing Python modules via pip"
+#pip install awscli \
+#  proselint
+#  vim-vint
 
 ###############################################################################
 # Clean & exit

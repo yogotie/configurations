@@ -9,26 +9,6 @@ echo "Install started at $(date)"
 # Make common src/ dir
 mkdir -p ~/src/
 
-# install Ruby since most likely not pre-installed on *nix (except Fedora)
-echo "Installing rbenv and ruby-build"
-mkdir -p ~/.rbenv
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-pushd ~/.rbenv
-src/configure
-make -C src
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
-popd
-
-echo "Installing Ruby 2.4.1"
-rbenv install -v 2.4.1
-rbenv global 2.4.1
-
 ## Install via pkg managers: https://github.com/powerline/fonts
 #echo "Installing Powerline fonts"
 #wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
