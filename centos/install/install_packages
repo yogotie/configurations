@@ -114,7 +114,8 @@ yum -y install apr-devel \
   zlib \
   zlib-devel \
   minicom \
-  python3-devel
+  python3-devel \
+  gnome-tweaks
 #  libelf-devel \
 #  libyaml-devel \
 #  g++ \
