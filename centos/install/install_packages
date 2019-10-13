@@ -1,0 +1,183 @@
+#!/usr/bin/env bash
+#
+# Shell script to install all needed development tools and software
+# Run as root/sudo
+#
+
+# Colors for printing
+RED='\033[1;31m'
+BLU='\033[1;34m'
+NC='\033[0m'
+
+# Path to temporary installation directory
+insPath=/tmp/auto_sys_install/
+
+# Simple error handler function to print to stderr
+err() {
+  echo -e "${RED}[$(date +"%T")] ERROR:${NC} $@" >&2
+  exit 1
+}
+
+# Simple message handler function
+msg() {
+  echo -e "\n${BLU}[$(date +"%T")]:${NC} $@\n"
+}
+
+if [[ $1 = "-h" ]]; then
+  echo "Usage: ./install_packages [-a]"
+  echo -e "\t-a,\tInstall all packages including source based ones that may be redundant"
+  exit 0
+fi
+
+if [[ $EUID -ne 0 ]]; then
+  err "This script must be run as root, exiting!"
+fi
+
+
+pkgApp=yum
+msg "Using $pkgApp pakage manager for installation"
+
+msg "Install started at: $(date)"
+msg "Creating temp directory at: $insPath\n"
+mkdir -p $insPath
+pushd $insPath
+
+
+###############################################################################
+# Add Optional Repos: Update and upgrade
+###############################################################################
+
+msg "Updating current repo lists and adding any additional groups"
+
+# Clear the yum cache and upgrade (update and remove obsolete packages)
+yum clean all
+yum -y upgrade
+yum -y install epel-release
+
+
+###############################################################################
+# Install Basic Development Parts & General Tools
+###############################################################################
+
+# NOTE: If certain programs/packages are not wanted they can be easily commented out
+msg "Installing applications using $pkgApp"
+
+# TODO: consolidate common package names
+yum -y install yum-utils
+yum -y groupinstall "Development Tools" \
+"Compatibility Libraries" \
+#"GNOME Desktop" \
+"Security Tools" \
+"System Administration Tools"
+yum -y install apr-devel \
+  apr-util-cdevel \
+  autoconf \
+  automake \
+  bash-completion \
+  bison \
+  bzip2 \
+  centos-release-scl \
+  cifs-utils \
+  clang \
+  clang-analyzer \
+  clang-devel \
+  cmake \
+  ctags \
+  curl \
+  curl-devel \
+  devtoolset-8 \
+  g++ \
+  gcc \
+  gcc-c++ \
+  gcc-gnat \
+  gimp \
+  git-core \
+  gtkwave \
+  htop \
+  httpd \
+  httpd-devel \
+  ibutils \
+  infiniband-diags \
+  kernel-devel \
+  kernel-doc \
+  libelf-devel \
+  libffi-devel \
+  libibcommon \
+  libibverbs \
+  libibverbs-utils \
+  libtool \
+  libyaml-devel \
+  libevent-devel \
+  libevent-doc \
+  llvm \
+  llvm-devel \
+  llvm-libs \
+  llvm-toolset-7 \
+  llvm-toolset-7-build \
+  llvm-toolset-7-clang-analyzer \
+  llvm-toolset-7-clang-devel \
+  llvm-toolset-7-clang-tools-extra \
+  llvm-toolset-7-llvm-devel \
+  make \
+  nano \
+  nmap \
+  nodejs \
+  npm \
+  openssl-devel \
+  patch \
+  perftest \
+  python-devel \
+  python34 \
+  python34-devel \
+  qemu \
+  qemu-kvm \
+  qperf \
+  readline \
+  readline-devel \
+  sqlite-devel \
+  the_silver_searcher \
+  tmux \
+  vim \
+  vnc-server \
+  vsftpd \
+  weechat \
+  wget \
+  zlib \
+  zlib-devel \
+  python-pip \
+  python34-setuptools \
+  minicom
+
+sudo easy_install-3.4 pip
+
+/usr/lib/virtualbox/vboxdrv.sh setup
+usermod -a -G vboxusers $USER
+
+# Enable Clang 5.x tools
+scl enable devtoolset-8 llvm-toolset-7 bash
+
+msg "Installing npm packages"
+npm install -g grunt-cli \
+  gulp-cli \
+  write-good
+
+msg "Installing Gems"
+gem install bundler \
+  jekyll \
+  vimgolf
+
+# TODO: system dependent pip?
+msg "Installing Python modules via pip"
+pip install awscli \
+  proselint
+  vim-vint
+
+###############################################################################
+# Clean & exit
+###############################################################################
+
+msg "Deleting temp directory at $insPath"
+popd
+rm -rf $insPath*
+msg "\nDONE!... Installs and updates successful\n"
+

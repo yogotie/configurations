@@ -1,0 +1,15 @@
+#!/bin/sh
+
+insLoc=/usr/local/bin/
+
+cp  ./utilities/git_utils/git-print-TODOs        $insLoc
+cp  ./utilities/git_utils/git-rewrite-author     $insLoc
+cp  ./utilities/git_utils/git-status-src-dirs    $insLoc
+cp  ./utilities/git_utils/git-update-src-dirs    $insLoc
+cp  ./utilities/git_utils/git-rm-dos-whitespace  $insLoc
+cp  ./utilities/git_utils/git-acp                $insLoc
+cp  ./utilities/git_utils/git-list-large         $insLoc
+cp  ./utilities/sys_utils/scrot-screenshot       $insLoc
+cp  ./utilities/sys_utils/tmux_mem_cpu           $insLoc
+
+echo "Scripts installed to $insLoc"
