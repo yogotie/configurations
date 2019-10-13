@@ -65,10 +65,10 @@ msg "Installing applications using $pkgApp"
 # TODO: consolidate common package names
 yum -y install yum-utils
 yum -y groupinstall "Development Tools" \
-"Compatibility Libraries" \
+"System Administration Tools"
+#"Compatibility Libraries" \
 #"GNOME Desktop" \
 #"Security Tools" \
-"System Administration Tools"
 yum -y install apr-devel \
   apr-util-devel \
   autoconf \
