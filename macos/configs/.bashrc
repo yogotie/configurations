@@ -19,17 +19,14 @@ if [ -f /etc/profile.d/bash_completion.sh ]; then
 fi
 
 # On macOS, load brew bash completion modules
-if [ $(uname) = "Darwin" ] && command -v brew &> /dev/null ; then
-  BREW_PREFIX=$(brew --prefix)
-  if [ -f "$BREW_PREFIX"/etc/bash_completion ]; then
-    . "$BREW_PREFIX"/etc/bash_completion
-  fi
-
-  if [ "${BASH_VERSINFO}" -ge 4 ] && [ -f "$BREW_PREFIX"/share/bash-completion/bash_completion ]; then
-    . "$BREW_PREFIX"/share/bash-completion/bash_completion
-  fi
+BREW_PREFIX=$(brew --prefix)
+if [ -f "$BREW_PREFIX"/etc/bash_completion ]; then
+  . "$BREW_PREFIX"/etc/bash_completion
 fi
 
+if [ "${BASH_VERSINFO}" -ge 4 ] && [ -f "$BREW_PREFIX"/share/bash-completion/bash_completion ]; then
+  . "$BREW_PREFIX"/share/bash-completion/bash_completion
+fi
 
 # =============================================================================
 # Terminal & Path additions/edits/exports
@@ -38,10 +35,16 @@ fi
 # customize PS1 bash prompt and change if on remote machine over SSH:
 #   SSH: bold w/red user@host and yellow pwd $
 #   Local: bold w/blue user@host and yellow pwd $
+
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
 if [ -n "$SSH_CLIENT" ]; then
   export PS1="\[\e[1;31m\][SSH]\u@\h \[\e[1;33m\]\W $\[\e[0m\] "
 else
-  export PS1="\[\e[1;34m\]\u@\h \[\e[1;33m\]\W $\[\e[0m\] "
+  export PS1="\[\e[1;34m\]\u@\h \[\e[1;33m\]\W\[\e[0m\]\$(parse_git_branch)\[\033[00m\] $ "
+#  export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 fi
 
 # set vim as default editor
