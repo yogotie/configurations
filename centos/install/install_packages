@@ -116,59 +116,53 @@ yum -y install apr-devel \
   minicom \
   python3-devel \
   gnome-tweaks
-#  libelf-devel \
-#  libyaml-devel \
-#  g++ \
-#  gcc-gnat \
-#  qemu \
-#  the_silver_searcher \
-#  centos-release-scl \
-#  devtoolset-8 \
-#  gimp \
-#  gtkwave \
-#  httpd \
-#  httpd-devel \
-#  ibutils \
-#  infiniband-diags \
-#  libibcommon \
-#  libibverbs \
-#  libibverbs-utils \
-#  llvm-toolset-7 \
-#  llvm-toolset-7-build \
-#  llvm-toolset-7-clang-analyzer \
-#  llvm-toolset-7-clang-devel \
-#  llvm-toolset-7-clang-tools-extra \
-#  llvm-toolset-7-llvm-devel \
-#  nano \
-#  nodejs \
-#  npm \
-#  python-devel \
-#  python34 \
-#  vnc-server \
-#  weechat \
-#  python-pip \
-#  python34-setuptools \
+  libelf-devel \
+  libyaml-devel \
+  g++ \
+  gcc-gnat \
+  qemu \
+  centos-release-scl \
+  devtoolset-8 \
+  gimp \
+  gtkwave \
+  ibutils \
+  infiniband-diags \
+  libibcommon \
+  libibverbs \
+  libibverbs-utils \
+  llvm-toolset-7 \
+  llvm-toolset-7-build \
+  llvm-toolset-7-clang-analyzer \
+  llvm-toolset-7-clang-devel \
+  llvm-toolset-7-clang-tools-extra \
+  llvm-toolset-7-llvm-devel \
+  nodejs \
+  npm \
+  python-devel \
+  python36 \
+  python-pip \
+  python36-setuptools \
 
-#sudo easy_install-3.4 pip
+sudo easy_install-3.6 pip
 
 # Enable Clang 5.x tools
-#scl enable devtoolset-8 llvm-toolset-7 bash
+scl enable devtoolset-8 llvm-toolset-7 bash
 
-#msg "Installing npm packages"
-#npm install -g grunt-cli \
-#  gulp-cli \
-#  write-good
+msg "Installing npm packages"
+npm install -g grunt-cli \
+  gulp-cli \
+  write-good
 
-#msg "Installing Gems"
-#gem install bundler \
-#  jekyll \
-#  vimgolf
+msg "Installing Gems"
+gem install bundler \
+  jekyll \
+  vimgolf
 
-# TODO: system dependent pip?
-#msg "Installing Python modules via pip"
-#pip install awscli \
-#  proselint
-#  vim-vint
+ TODO: system dependent pip?
+msg "Installing Python modules via pip"
+pip install awscli \
+  proselint
+  vim-vint
 
 ###############################################################################
 # Clean & exit
