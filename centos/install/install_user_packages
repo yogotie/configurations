@@ -31,6 +31,54 @@ crontab '*/5 * * * * if [ $(/usr/bin/yum check-update | sed '1,/^$/d' | wc -l) -
 echo "Current cron jobs:"
 crontab -l
 
+# tmux 2.9a install from src
+sudo yum remove -y tmux
+
+msg "Installing tmux from source..."
+pushd /tmp/ > /dev/null
+msg "NOTE: Check for tmux release updates at https://github.com/tmux/tmux/releases"
+wget https://github.com/tmux/tmux/releases/download/2.9a/tmux-2.9a.tar.gz
+tar -xzf tmux-2.9a.tar.gz
+pushd tmux-2.9a > /dev/null
+./configure && make
+sudo make install
+popd > /dev/null
+popd > /dev/null
+
+# Vim install from src w/clipboard & python support
+msg "Installing Vim from source..."
+# NOTE: remove shipping Vim
+  sudo yum remove -y vim-enhanced vim-common
+  sudo yum-builddep vim
+
+if [ -d "vim" ]; then
+  pushd vim/ > /dev/null
+  git pull
+else
+  git clone https://github.com/vim/vim.git
+  pushd vim/ > /dev/null
+fi
+
+./configure --with-features=huge \
+  --enable-multibyte \
+  --enable-rubyinterp=yes \
+  --enable-pythoninterp=yes \
+  --enable-perlinterp=yes \
+  --enable-gui=auto \
+  --enable-gtk2-check \
+  --with-x
+
+# If installing for single user (no `make install`) VIMRUNTIMEDIR can == {vim_src}/runtime
+make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
+# sometimes `sudo` is removed with vim
+if ! command -v sudo > /dev/null; then
+  su -c yum install -y sudo
+fi
+
+sudo make install
+hash vim
+popd > /dev/null
+
 echo "Installing vim components..."
 
 echo "Installing vim-plug"
