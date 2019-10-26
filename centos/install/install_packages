@@ -63,19 +63,22 @@ yum -y install epel-release
 msg "Installing applications using $pkgApp"
 
 # TODO: consolidate common package names
-yum -y install yum-utils
-yum -y groupinstall "Development Tools" \
-"System Administration Tools"
-#"Compatibility Libraries" \
-#"GNOME Desktop" \
-#"Security Tools" \
+sudo yum -y install yum-utils
+sudo yum -y groupinstall "Development Tools" \
+  "Compatibility Libraries" \
+  #"GNOME Desktop" \
+  "Security Tools" \
+  "System Administration Tools"
+
 yum -y install apr-devel \
-  apr-util-devel \
+  apr-devel \
+  apr-util-cdevel \
   autoconf \
   automake \
   bash-completion \
   bison \
   bzip2 \
+  centos-release-scl \
   cifs-utils \
   clang \
   clang-analyzer \
@@ -84,64 +87,58 @@ yum -y install apr-devel \
   ctags \
   curl \
   curl-devel \
-  gcc \
-  gcc-c++ \
-  git-core \
-  htop \
-  kernel-devel \
-  kernel-doc \
-  libtool \
-  libffi-devel \
-  libevent-devel \
-  libevent-doc \
-  llvm \
-  llvm-devel \
-  llvm-libs \
-  make \
-  nmap \
-  openssl-devel \
-  patch \
-  perftest \
-  qemu-kvm \
-  qperf \
-  readline \
-  readline-devel \
-  sqlite-devel \
-  tmux \
-  vim \
-  vsftpd \
-  wget \
-  zlib \
-  zlib-devel \
-  minicom \
-  python3-devel \
-  gnome-tweaks
-  libelf-devel \
-  libyaml-devel \
-  g++ \
-  gcc-gnat \
-  qemu \
-  centos-release-scl \
   devtoolset-8 \
+  g++ \
+  gcc \
+  gcc-arm-linux-gnu \
+  gcc-c++ \
   gimp \
+  git-core \
   gtkwave \
+  htop \
+  httpd \
+  httpd-devel \
   ibutils \
   infiniband-diags \
+  kernel-devel \
+  kernel-doc \
+  libelf-devel \
+  libffi-devel \
   libibcommon \
   libibverbs \
   libibverbs-utils \
+  libtool \
+  libyaml-devel \
+  llvm \
+  llvm-devel \
+  llvm-libs \
   llvm-toolset-7 \
   llvm-toolset-7-build \
   llvm-toolset-7-clang-analyzer \
   llvm-toolset-7-clang-devel \
   llvm-toolset-7-clang-tools-extra \
   llvm-toolset-7-llvm-devel \
+  make \
+  nano \
+  nmap \
   nodejs \
   npm \
+  openssl-devel \
+  patch \
+  perftest \
   python-devel \
   python36 \
-  python-pip \
-  python36-setuptools \
+  python36-devel \
+  qemu \
+  qemu-kvm \
+  qperf \
+  readline \
+  readline-devel \
+  sqlite-devel \
+  vsftpd \
+  wget \
+  zlib \
+  zlib-devel
 
 sudo easy_install-3.6 pip
 
