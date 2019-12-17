@@ -1,0 +1,202 @@
+#!/usr/bin/env bash
+#
+# Shell script to install all needed development tools and software
+# Run as regular user
+#
+
+# exit on error
+set -e
+
+# Colors for printing
+RED='\033[1;31m'
+BLU='\033[1;34m'
+NC='\033[0m'
+
+# Path to temporary installation directory
+insPath=/tmp/auto_sys_install/
+# Path to where script was executed
+execPath=$(pwd)
+
+# Simple error handler function to print to stderr
+err() {
+  echo -e "${RED}[$(date +"%T")] ERROR:${NC} $@" >&2
+  exit 1
+}
+
+# Simple message handler function
+msg() {
+  echo -e "\n${BLU}[$(date +"%T")]:${NC} $@\n"
+}
+
+if [[ $1 = "-h" ]]; then
+  echo "Usage: ./install_packages"
+  echo -e "\tInstall all packages"
+  exit 0
+fi
+
+# Individual commands needing privilege scripted as sudo
+if [[ $EUID -eq 0 ]]; then
+  err "This script should be run as a regular user, exiting!"
+fi
+
+
+# Figure out what system and package manager we're using
+pkgApp=apt
+msg "Using $pkgApp pakage manager for installation"
+
+msg "Install started at: $(date)"
+msg "Creating temp directory at: $insPath\n"
+mkdir -p $insPath
+pushd $insPath > /dev/null
+
+
+  ###############################################################################
+  msg "Add Optional Repos: Update and upgrade"
+  ###############################################################################
+
+  msg "Updating current repo lists and adding any additional groups"
+
+  # NOTE: a lot of these are out of date!
+
+  # Update and pull in all new repos
+  sudo apt update
+  # Use dist-upgrade to smart dependency changing and conflict resolution
+  sudo apt -y dist-upgrade
+
+
+  ###############################################################################
+  msg "Install Basic Development Parts & General Tools"
+  ###############################################################################
+
+  # NOTE: If certain programs/packages are not wanted they can be easily commented out
+  msg "Installing applications using $pkgApp"
+
+  sudo apt-get -y --install-recommends install \
+    autoconf \
+    automake \
+    bash-completion \
+    build-essential \
+    bzip2 \
+    cmake \
+    curl \
+    fonts-powerline \
+    g++ \
+    gcc \
+    git \
+    golang \
+    htop \
+    libelf-dev \
+    libevent-dev \
+    libncurses5-dev \
+    libncursesw5-dev \
+    npm \
+    python-dev \
+    python3-dev \
+    llvm \
+    make \
+    qemu \
+    qemu-kvm \
+    ranger \
+    shellcheck \
+    stress \
+    tcl \
+    tree \
+    unrar \
+    wget \
+    xclip
+
+    sudo apt -y autoremove
+
+
+  ###############################################################################
+  msg "Installing source-based programs"
+  ###############################################################################
+
+  mkdir -p ~/src
+  pushd ~/src > /dev/null
+
+    # Go Lang tools
+    msg "Installing Go from source..."
+    if [ -d /usr/local/go ]; then
+      msg "Removing previous Go install"
+      rm -rf /usr/local/go
+    fi
+
+    msg "NOTE: Check for Go release updates at https://golang.org/dl/"
+    goOS=$(echo "$(uname)" | awk '{print tolower($0)}')
+    if [ "$(uname -m)" != "x86_64" ]; then
+      err "Expecting x86_64 architecture to install Go!"
+    fi
+    wget https://dl.google.com/go/go1.13.5.${goOS}-amd64.tar.gz
+    sudo tar -C /usr/local/ -xzf go1.13.5.${goOS}-amd64.tar.gz
+
+    export PATH=$PATH:/usr/local/go/bin
+
+
+    # tmux 2.9a install from src
+    msg "Installing tmux from source..."
+    msg "NOTE: Check for tmux release updates at https://github.com/tmux/tmux/releases"
+    wget https://github.com/tmux/tmux/releases/download/2.9a/tmux-2.9a.tar.gz
+    tar -xzf tmux-2.9a.tar.gz
+    pushd tmux-2.9a > /dev/null
+      ./configure && make
+      sudo make install
+    popd > /dev/null
+  popd > /dev/null
+
+
+  ###############################################################################
+  msg "Installing config files and environment settings"
+  ###############################################################################
+  pushd $execPath > /dev/null
+
+    msg "Installing terminal settings. Run 'term_test' after to confirm proper operation."
+    # Add `tmux` terminal types to support italic/bold in tmux (may not be needed for Fedora)
+    tic -x ../configs/xterm-256color-italic.terminfo
+    tic -x ../configs/tmux-256color.terminfo
+
+    # check for brew package updates every 5 min
+    msg "Installing crontab entries"
+    cronLine=""
+    cronLine='*/5 * * * * if [ $(/usr/bin/apt list --upgradable | wc -l) -ge 2 ] ; then echo " ⚑ Apt Updates Available: $(/usr/bin/apt list --upgradable | wc -l) " > /tmp/sys_package_updates; else echo "" > /tmp/sys_package_updates; fi'
+
+    # NOTE: overwrites any crontab entries, echo current entries before pipe if looking to keep
+    echo "$cronLine" | crontab -
+    echo "Current cron jobs:"
+    crontab -l
+
+    msg "Installing dotfiles"
+    ./update_configs
+
+    msg "Installing scripts"
+    sudo ./install_scripts
+
+    msg "Installing vim components..."
+    # vim-plug
+    mkdir -p ~/.vim/autoload
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+    # Install plug-ins before first use
+    vim +'PlugInstall --sync' +qa
+
+    # YCM seems to be the only plug-in requiring this extra step...
+    ~/.vim/plugged/YouCompleteMe/install.py --all
+
+    # vim-colorschemes
+    pushd ~/src > /dev/null
+      git clone https://github.com/flazz/vim-colorschemes.git --depth=1
+      mkdir -p ~/.vim/colors/
+      cp vim-colorschemes/colors/* ~/.vim/colors/
+      rm -rf vim-colorschemes/
+    popd > /dev/null
+
+  popd > /dev/null
+
+  ###############################################################################
+  # Clean & exit
+  ###############################################################################
+
+  msg "Deleting temp directory at $insPath"
+popd > /dev/null
+rm -rf $insPath*
+msg "DONE!... Installs and updates successful\n"
