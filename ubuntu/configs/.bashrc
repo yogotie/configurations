@@ -82,11 +82,6 @@ export PATH=$PATH:/usr/local/go/bin
 # Prevent ioctl error when gpg2 signing
 export GPG_TTY=$(tty)
 
- Enable GCC 8 & LLVM 7 in CentOS
-if [ -f /etc/centos-release ]; then
-  source scl_source enable devtoolset-8 llvm-toolset-7
-fi
-
 # =============================================================================
 # User specific aliases and functions
 # =============================================================================
@@ -103,7 +98,7 @@ else
 fi
 
 # easy updating for package management
-alias sys-update='sudo yum upgrade -y && echo "" > /tmp/sys_package_updates'
+alias sys-update='sudo apt update && sudo apt dist-upgrade -y && sudo apt autoremove -y && echo "" > /tmp/sys_package_updates'
 
 # ls macros
 alias ll='ls -lhXG'
@@ -189,9 +184,4 @@ case "$(pidof ssh-agent | wc -w)" in
   *) kill "$(pidof ssh-agent | awk '{print $1}')"
     ;;
 esac
-
-# Initiate Ruby environment
-#if [ $(command -v rbenv) ]; then
-#  eval "$(rbenv init -)"
-#fi
 

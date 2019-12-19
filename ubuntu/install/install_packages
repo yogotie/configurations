@@ -79,6 +79,7 @@ pushd $insPath > /dev/null
     bzip2 \
     cmake \
     curl \
+    ctags \
     fonts-powerline \
     g++ \
     gcc \
