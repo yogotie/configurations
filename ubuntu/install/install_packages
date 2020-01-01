@@ -84,7 +84,6 @@ pushd $insPath > /dev/null
     g++ \
     gcc \
     git \
-    golang \
     htop \
     libelf-dev \
     libevent-dev \
@@ -103,6 +102,7 @@ pushd $insPath > /dev/null
     tcl \
     tree \
     unrar \
+    vim \
     wget \
     xclip
 
