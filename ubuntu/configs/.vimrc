@@ -164,8 +164,6 @@ nnoremap <leader>H :vertical resize -10<CR>
 
 " Open/toggle `NERDTree` file viewer plugin
 nnoremap <leader>t :NERDTreeToggle<CR>
-" Open/toggle `Tagbar` tag viewer plugin
-nnoremap <leader>y :TagbarToggle<CR>
 " Toggle `gundo` undo search plugin
 nnoremap <leader>u :GundoToggle<CR>
 " Open `CtrlP` plugin fuzzy search tool
@@ -345,10 +343,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'godlygeek/tabular'
 
 
-  " TagBar: displays tags in window ordered by scope -------------------------
-  Plug 'majutsushi/tagbar'
-
-
   " UltiSnips: Plugin for snippets -------------------------------------------
   Plug 'SirVer/ultisnips'
   " better key bindings for UltiSnipsExpandTrigger
@@ -388,17 +382,6 @@ call plug#begin('~/.vim/plugged')
   " Only check on file save/load
   let g:gitgutter_realtime = 0
   let g:gitgutter_eager = 0
-
-
-  " VimGutentags: manages & auto-(re)generates tag files for project ---------
-  Plug 'ludovicchabant/vim-gutentags'
-  set statusline+=%{gutentags#statusline()}
-
-
-  " VimHighlightedYank: Highlights recently yanked text ----------------------
-  Plug 'machakann/vim-highlightedyank'
-  " ms to keep highlighted, -1 to persist until edit or new yank
-  let g:highlightedyank_highlight_duration = -1
 
 
   " VimMarkdown: Markdown highlighting ---------------------------------------

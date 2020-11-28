@@ -84,6 +84,7 @@ pushd $insPath > /dev/null
     g++ \
     gcc \
     git \
+    golang \
     htop \
     libelf-dev \
     libevent-dev \
@@ -104,46 +105,10 @@ pushd $insPath > /dev/null
     unrar \
     vim \
     wget \
-    xclip
+    xclip \
+    tmux
 
     sudo apt -y autoremove
-
-
-  ###############################################################################
-  msg "Installing source-based programs"
-  ###############################################################################
-
-  mkdir -p ~/src
-  pushd ~/src > /dev/null
-
-    # Go Lang tools
-    msg "Installing Go from source..."
-    if [ -d /usr/local/go ]; then
-      msg "Removing previous Go install"
-      rm -rf /usr/local/go
-    fi
-
-    msg "NOTE: Check for Go release updates at https://golang.org/dl/"
-    goOS=$(echo "$(uname)" | awk '{print tolower($0)}')
-    if [ "$(uname -m)" != "x86_64" ]; then
-      err "Expecting x86_64 architecture to install Go!"
-    fi
-    wget https://dl.google.com/go/go1.13.5.${goOS}-amd64.tar.gz
-    sudo tar -C /usr/local/ -xzf go1.13.5.${goOS}-amd64.tar.gz
-
-    export PATH=$PATH:/usr/local/go/bin
-
-
-    # tmux 2.9a install from src
-    msg "Installing tmux from source..."
-    msg "NOTE: Check for tmux release updates at https://github.com/tmux/tmux/releases"
-    wget https://github.com/tmux/tmux/releases/download/2.9a/tmux-2.9a.tar.gz
-    tar -xzf tmux-2.9a.tar.gz
-    pushd tmux-2.9a > /dev/null
-      ./configure && make
-      sudo make install
-    popd > /dev/null
-  popd > /dev/null
 
 
   ###############################################################################
@@ -184,6 +149,7 @@ pushd $insPath > /dev/null
     ~/.vim/plugged/YouCompleteMe/install.py --all
 
     # vim-colorschemes
+    mkdir -p ~/src
     pushd ~/src > /dev/null
       git clone https://github.com/flazz/vim-colorschemes.git --depth=1
       mkdir -p ~/.vim/colors/
