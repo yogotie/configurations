@@ -82,20 +82,12 @@ brew install \
 msg "install Java Dev Kit: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html"
 brew cleanup
 
-chsh -s /usr/local/bin/bash
-sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
-ln -s /usr/local/bin/bash /usr/local/bin/bash-terminal-app
+chsh -s /opt/homebrew/bin/bash
+sudo bash -c 'echo /opt/homebrew/bin/bash >> /etc/shells'
 
 ###############################################################################
 # Source-based installs
 ###############################################################################
-
-# GHDL- FOSS VHDL compiler & simulator
-pushd /usr/local/
-sudo wget https://github.com/ghdl/ghdl/releases/download/v0.36/ghdl-0.36-macosx-llvm.tgz
-sudo tar -xzvf ghdl-0.36-macosx-llvm.tgz
-sudo rm -f ghdl-0.36-macosx-llvm.tgz
-popd
 
 #TODO: add custom Google Fonts from www.fonts.google.com for some distros
 

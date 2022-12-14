@@ -4,6 +4,11 @@
 # Terminal & Path additions/edits/exports
 # =============================================================================
 
+# Added by Toolbox App
+export PATH="$PATH:/Users/timothylinden/Library/Application Support/JetBrains/Toolbox/scripts"
+export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/opt/homebrew/bin
+
 # Source global definitions if existent
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
@@ -87,24 +92,6 @@ export LESS_TERMCAP_md="${yellow}"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER='less -X'
 
-if [ "$(uname -s)" = "Linux" ]; then
-  #               - Linaro build tools
-  export PATH=$PATH:~/./src/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin
-
-  # Prevent ioctl error when gpg2 signing
-  export GPG_TTY=$(tty)
-
-  # Enable GCC 8 & LLVM 7 in CentOS
-  if [ -f /etc/centos-release ]; then
-    source scl_source enable devtoolset-8 llvm-toolset-7
-  fi
-
-elif [ "$(uname -s)" = "Darwin" ]; then
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-  export PATH=$PATH:/usr/local/bin
-fi
-
-
 # =============================================================================
 # User specific aliases and functions
 # =============================================================================
@@ -121,13 +108,7 @@ else
 fi
 
 # easy updating for package management
-if [ "$(uname -s)" = "Linux" ]; then
-  if [ -n "$(command -v yum)" ]; then
-    alias sys-update='sudo yum upgrade -y && echo "" > /tmp/sys_package_updates'
-  fi
-elif [ "$(uname -s)" = "Darwin" ]; then
-  alias sys-update='brew update && brew upgrade && brew cleanup && echo "" > /tmp/sys_package_updates'
-fi
+alias sys-update='brew update && brew upgrade && brew cleanup && echo "" > /tmp/sys_package_updates'
 
 # ls macros
 # alias ll='ls -lhXG'

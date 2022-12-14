@@ -28,11 +28,7 @@ if !exists("g:my_os")
 endif
 
 " Use system CLIPBOARD register. Vim must be built w/clipboard support
-if (g:my_os == "Darwin")
-  set clipboard=unnamed
-else "*nix
-  set clipboard=unnamedplus
-endif
+set clipboard=unnamed
 
 " Turn off background color erase (BCE) so that color schemes work within tmux
 " (prevalent in CentOS 7.* where background bars are seen) based on term
@@ -350,10 +346,6 @@ call plug#begin('~/.vim/plugged')
 
   " TagBar: displays tags in window ordered by scope -------------------------
   Plug 'majutsushi/tagbar'
-
-
-  " UltiSnips: Plugin for snippets -------------------------------------------
-  Plug 'SirVer/ultisnips'
 
 
   " Vader: Vader test framework ----------------------------------------------
