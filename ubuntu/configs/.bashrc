@@ -75,8 +75,15 @@ export LESS_TERMCAP_md="${yellow}"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER='less -X'
 
-export PATH=$PATH:/usr/local/go/bin
-#export PATH=$PATH:~/src/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin
+# export LM_LICENSE_FILE=/home/tools/intelFPGA_lite/22.1std/LR-101262_License.dat
+
+# export PATH=$PATH:/usr/local/go/bin
+# export PATH=$PATH:/home/tools/bin
+# export PATH=$PATH:/home/tools/Xilinx/Vivado/2022.2/bin
+# export PATH=$PATH:/home/tools/intelFPGA_lite/22.1std/quartus/bin
+# export PATH=$PATH:/home/tools/intelFPGA_lite/22.1std/questa_fse/bin
+# export QSYS_ROOTDIR="/home/tools/intelFPGA_lite/22.1std/quartus/sopc_builder/bin"
+# export PATH=$PATH:~/src/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu/bin
 
 #export RTE_TARGET=x86_64-native-linuxapp-gcc
 # Prevent ioctl error when gpg2 signing

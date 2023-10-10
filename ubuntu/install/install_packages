@@ -79,7 +79,7 @@ pushd $insPath > /dev/null
     bzip2 \
     cmake \
     curl \
-    ctags \
+    universal-ctags \
     fonts-powerline \
     g++ \
     gcc \
@@ -91,10 +91,10 @@ pushd $insPath > /dev/null
     libncurses5-dev \
     libncursesw5-dev \
     npm \
-    python-dev \
     python3-dev \
     llvm \
     make \
+    openjdk-17-jdk \
     qemu \
     qemu-kvm \
     ranger \
@@ -167,3 +167,4 @@ pushd $insPath > /dev/null
 popd > /dev/null
 rm -rf $insPath*
 msg "DONE!... Installs and updates successful\n"
+

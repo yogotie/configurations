@@ -4,3 +4,11 @@
 if [ -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+export PATH
+# export QSYS_ROOTDIR="/home/tools/intelFPGA_lite/22.1std/quartus/sopc_builder/bin"
+
